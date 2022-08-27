@@ -36,7 +36,7 @@ app.post('/imagen', upload.single('imagen'), async function (req, res) {
         console.log({ error })
     }
 
-    fs.writeFileSync('new/img1.png', resizedImageBuffer)
+    fs.writeFileSync('newfolder/img1.png', resizedImageBuffer)
 
     console.log(resizedImageBuffer)
 
