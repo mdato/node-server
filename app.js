@@ -1,5 +1,5 @@
 const express = require('express')
-const multer  = require('multer')
+const multer = require('multer')
 const sharp = require('sharp')
 const fs = require('fs')
 
@@ -10,16 +10,16 @@ const app = express()
 
 app.use(express.json())
 
-app.get('/' , function(req, res) {
+app.get('/', function (req, res) {
 
     res.send('Hi man!! from HEROKU!')
 })
 
-app.post('/imagen', upload.single('imagen') , async function (req, res) {
+app.post('/imagen', upload.single('imagen'), async function (req, res) {
 
     const imagen = req.file
 
-    console.log({file: req.file})
+    console.log({ file: req.file })
 
     const processedImage = sharp(imagen.buffer)
 
@@ -27,13 +27,13 @@ app.post('/imagen', upload.single('imagen') , async function (req, res) {
         fit: "contain",
         background: "#FFF"
     })
-    
+
     let resizedImageBuffer
-    
+
     try {
         resizedImageBuffer = await resizedImage.toBuffer()
     } catch (error) {
-        console.log({error})
+        console.log({ error })
     }
 
     fs.writeFileSync('new/img1.png', resizedImageBuffer)
@@ -41,9 +41,9 @@ app.post('/imagen', upload.single('imagen') , async function (req, res) {
     console.log(resizedImageBuffer)
 
     res.send(
-        { 
-        '$content-type': 'image/png', 
-        '$content': resizedImageBuffer.toString('base64')
+        {
+            '$content-type': 'image/png',
+            '$content': resizedImageBuffer.toString('base64')
         }
     )
 
@@ -52,7 +52,7 @@ app.post('/imagen', upload.single('imagen') , async function (req, res) {
 const PORT = process.env.PORT || 4000
 
 
-app.listen(PORT, function() {
+app.listen(PORT, function () {
 
     console.log("Server listen in port:", PORT)
 })
